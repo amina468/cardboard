@@ -57,7 +57,7 @@ def draw_predections(image, boxes, labels, scores, thr):
     return image, nboxes
 
 def get_model():
-    my_model = model.Model('yolo', 2, 'cpus')
+    my_model = model.Model('yolo', 2, 'cpu')
     my_model.load(r'weights.pt')
     return my_model
 
