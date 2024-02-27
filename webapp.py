@@ -64,11 +64,11 @@ def get_model():
     my_model.load(weights_path)
     return my_model
 
+my_model = get_model() # Global
+
+
 
 def main():
-    # Get model
-    my_model = get_model()
-
     # Get image
     st.title("COUNT BOXES")
     uploaded_file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
