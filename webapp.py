@@ -52,6 +52,7 @@ def draw_predections(image, boxes, labels, scores, thr):
     
     return image, nboxes
 
+@st.cache_resource
 def get_model():
     my_model = model.Model('yolo', 2, 'cpu')
     weights_path = r'weights.pt'
