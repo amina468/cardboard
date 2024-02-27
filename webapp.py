@@ -1,15 +1,11 @@
-import cv2
+import os
+from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 import io
 from torchvision import transforms
 import streamlit as st
 from detect import model
 import gdown
-
-# a file
-url = "https://drive.google.com/file/d/10zGK2zRDomXtCeQ3etXziedkLxjRsTwk/view?usp=sharing"
-output = "weights.pt"
-gdown.download(url, output, fuzzy=True)
 
 
 def draw_predections(image, boxes, labels, scores, thr):
@@ -58,7 +54,14 @@ def draw_predections(image, boxes, labels, scores, thr):
 
 def get_model():
     my_model = model.Model('yolo', 2, 'cpu')
-    my_model.load(r'weights.pt')
+    weights_path = r'weights.pt'
+    weights = Path(weights_path)
+    if not weights.exists():
+        # a file
+        url = "https://drive.google.com/file/d/10zGK2zRDomXtCeQ3etXziedkLxjRsTwk/view?usp=sharing"
+        output = "weights.pt"
+        gdown.download(url, output, fuzzy=True)
+    my_model.load(weights_path)
     return my_model
 
 
