@@ -1,7 +1,6 @@
 import os
 from collections import OrderedDict
 from PIL import ImageDraw, ImageFont, Image
-import numpy as np
 import torch
 from torchvision import transforms
 from torchvision.models.detection.roi_heads import fastrcnn_loss
