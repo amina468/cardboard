@@ -66,7 +66,30 @@ def get_model():
 
 my_model = get_model() # Global
 
+def run_inference(uploaded_file, thr):
+    image = io.BytesIO(uploaded_file.read())
+    image = Image.open(image)
+    w, h = image.size
+    image = image.resize((w * 2, h * 2))
+    
+    # Perform object detection
+    pred = my_model.predict(image)
+    
+    # Process detection results
+    boxes = pred['boxes']
+    scores = pred['scores']
+    labels = pred['labels']
 
+    # Display the image with bounding boxes
+    image, nboxes = draw_predections(image, boxes, labels, scores, thr)
+
+    st.image(image, channels="BGR")
+    if nboxes < 1:
+        st.header(f"**Your image doesn't contain any boxes.**")
+    elif nboxes < 2:
+        st.header(f'**Your image contains :red[{nboxes}] boxe.**')
+    else:
+        st.header(f'**Your image contains :red[{nboxes}] boxe(s).**')
 
 def main():
     # Get image
@@ -76,29 +99,7 @@ def main():
 
     # Run predection on image
     if uploaded_file is not None:
-        image = io.BytesIO(uploaded_file.read())
-        image = Image.open(image)
-        w, h = image.size
-        image = image.resize((w * 2, h * 2))
-        
-        # Perform object detection
-        pred = my_model.predict(image)
-        
-        # Process detection results
-        boxes = pred['boxes']
-        scores = pred['scores']
-        labels = pred['labels']
-
-        # Display the image with bounding boxes
-        image, nboxes = draw_predections(image, boxes, labels, scores, thr)
-
-        st.image(image, channels="BGR")
-        if nboxes < 1:
-            st.header(f"**Your image doesn't contain any boxes.**")
-        elif nboxes < 2:
-            st.header(f'**Your image contains :red[{nboxes}] boxe.**')
-        else:
-            st.header(f'**Your image contains :red[{nboxes}] boxe(s).**')
+        run_inference(uploaded_file, thr)
 
 
 if __name__ == '__main__':
