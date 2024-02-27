@@ -53,7 +53,6 @@ nest-asyncio==1.5.6
 networkx==3.0
 numpy==1.24.1
 oauthlib==3.2.2
-opencv-python==4.7.0.72
 packaging==23.1
 pandas==2.0.1
 parso==0.8.3
@@ -117,3 +116,4 @@ wcwidth==0.2.6
 Werkzeug==2.3.4
 yarl==1.9.2
 zipp==3.15.0
+opencv-python==4.7.0.72
